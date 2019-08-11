@@ -1,0 +1,27 @@
+{
+  "name": "generator-react-observable-cli",
+  "version": "0.1.0",
+  "description": "",
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timoyan/react-observable-cli.git"
+  },
+  "author": "Timo Yan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/timoyan/react-observable-cli/issues"
+  },
+  "homepage": "https://github.com/timoyan/react-observable-cli#readme",
+  "dependencies": {
+    "yeoman-generator": "4.0.1"
+  },
+  "devDependencies": {
+    "prettier": "1.18.2"
+  }
+}
