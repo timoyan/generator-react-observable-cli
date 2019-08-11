@@ -9,4 +9,4 @@
 
 ## Execute cli
 
--   Run `yo redux-observable-cli`
+-   Run `yo react-observable-cli`
