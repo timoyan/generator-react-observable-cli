@@ -1,6 +1,7 @@
 const Generator = require('yeoman-generator');
 const mkdirp = require('mkdirp');
 const path = require('path');
+const prettier = require('prettier');
 
 module.exports = class extends Generator {
     // The name `constructor` is important here
@@ -118,5 +119,18 @@ module.exports = class extends Generator {
         this.fs.copy(this.templatePath('project/**'), projectPackagePath, {
             globOptions: { dot: true }
         });
+        this.fs.copyTpl(
+            this.templatePath('public/index.html'),
+            path.join(projectPackagePath, 'public/index.html'),
+            {
+                project_name: toTitleCase,
+                webpack_settings: `
+        <% _.forEach(htmlWebpackPlugin.files.js, function(js) { %>
+        <script type="text/javascript" src="<%-js%>"></script>
+        <% }); _.forEach(htmlWebpackPlugin.files.css, function(css) { %>
+        <link rel="stylesheet" type="text/css" href="<%-css%>" /> <% }); %>
+                `
+            }
+        );
     }
 };
