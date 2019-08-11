@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "jsx": "react",
+        "skipLibCheck": true,
+        "noEmit": true,
+        "moduleResolution": "node",
+        "lib": ["dom", "es7"]
+    },
+    "exclude": ["node_modules/**/*"],
+    "include": ["packages/**/*"]
+}
