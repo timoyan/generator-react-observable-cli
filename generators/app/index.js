@@ -200,12 +200,32 @@ module.exports = class extends Generator {
     // }
     createDotNetCoreProject() {
         const { c_dotnet_project_name } = this.answers;
-        this.spawnCommandSync(
-            `dotnet new web -n ${c_dotnet_project_name} --no-restore`,
-            [],
+        const aspnetTemplatePath = this.templatePath('aspnet');
+        const aspnetFolderPath = this.destinationPath(c_dotnet_project_name);
+        // this.spawnCommandSync(
+        //     `dotnet new web -n ${c_dotnet_project_name} --no-restore`,
+        //     [],
+        //     {
+        //         stdio: 'inherit',
+        //         cwd: this.destinationPath()
+        //     }
+        // );
+        mkdirp.sync(aspnetFolderPath);
+        this.fs.copy(
+            path.join(aspnetTemplatePath, 'template.csproj'),
+            path.join(aspnetFolderPath, `${c_dotnet_project_name}.csproj`)
+        );
+
+        this.fs.copyTpl(
+            path.join(aspnetTemplatePath, '**'),
+            aspnetFolderPath,
+            { c_aspnet_project_name: c_dotnet_project_name },
+            null,
             {
-                stdio: 'inherit',
-                cwd: this.destinationPath()
+                globOptions: {
+                    dot: true,
+                    ignore: [path.join(aspnetTemplatePath, 'template.csproj')]
+                }
             }
         );
     }
