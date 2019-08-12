@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Jest Tests",
+            "cwd": "${workspaceRoot}/packages/<%= project_name %>",
+            "args": [
+                "--inspect-brk",
+                "node_modules/.bin/jest",
+                "--runInBand",
+                "--config",
+                "jest.config.js"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        }
+    ]
+}

@@ -123,13 +123,29 @@ module.exports = class extends Generator {
             this.templatePath('public/index.html'),
             path.join(projectPackagePath, 'public/index.html'),
             {
-                project_name: toTitleCase,
+                project_name: c_project_name,
                 webpack_settings: `
         <% _.forEach(htmlWebpackPlugin.files.js, function(js) { %>
         <script type="text/javascript" src="<%-js%>"></script>
         <% }); _.forEach(htmlWebpackPlugin.files.css, function(css) { %>
         <link rel="stylesheet" type="text/css" href="<%-css%>" /> <% }); %>
                 `
+            }
+        );
+    }
+
+    createVSCodeConfigurations() {
+        const { c_project_name } = this.answers;
+
+        this.fs.copyTpl(
+            this.templatePath('vscode/**'),
+            this.destinationPath('./.vscode'),
+            { project_name: c_project_name },
+            null,
+            {
+                globOptions: {
+                    dot: true
+                }
             }
         );
     }
