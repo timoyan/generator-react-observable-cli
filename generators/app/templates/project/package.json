@@ -51,10 +51,10 @@
         "dev": "npx cross-env REACT_APP_ENV=development core-scripts --env dev",
         "build-dev": "npx cross-env REACT_APP_ENV=test core-scripts --build --env dev",
         "build-prod": "npx cross-env REACT_APP_ENV=production core-scripts --build --env prod",
-        "build-pre-prod": "npx cross-env REACT_APP_ENV=preprod core-scripts --build --env prod",
+        "build-preprod": "npx cross-env REACT_APP_ENV=preprod core-scripts --build --env prod",
         "type-check": "npx tsc --noEmit",
         "lint": "npx tslint --project tsconfig.json --config tslint.json",
-        "test": "npx jest --clearCache && npx jest --env=jsdom --no-cache --runInBand"
+        "test": "npx jest --clearCache && npx jest --env=jsdom --no-cache --runInBand --passWithNoTests"
     },
     "browserslist": [
         ">0.2%",
