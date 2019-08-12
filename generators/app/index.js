@@ -116,9 +116,15 @@ module.exports = class extends Generator {
         const projectPackagePath = path.join(packagesPath, c_project_name);
 
         mkdirp.sync(path.join(projectPackagePath, 'packages'));
-        this.fs.copy(this.templatePath('project/**'), projectPackagePath, {
-            globOptions: { dot: true }
-        });
+        this.fs.copyTpl(
+            this.templatePath('project/**'),
+            projectPackagePath,
+            { project_name: c_project_name },
+            null,
+            {
+                globOptions: { dot: true }
+            }
+        );
         this.fs.copyTpl(
             this.templatePath('public/index.html'),
             path.join(projectPackagePath, 'public/index.html'),
