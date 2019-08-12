@@ -114,8 +114,29 @@ module.exports = class extends Generator {
         const { c_project_name } = this.answers;
         const packagesPath = this.destinationPath('packages');
         const projectPackagePath = path.join(packagesPath, c_project_name);
+        const projectProjectPackagePath = path.join(projectPackagePath, 'packages');
 
-        mkdirp.sync(path.join(projectPackagePath, 'packages'));
+        mkdirp.sync(projectProjectPackagePath);
+
+        const subPackagesDirName = [
+            'apis',
+            'client',
+            'components',
+            'config',
+            'constants',
+            'containers',
+            'epics',
+            'reducers',
+            'tests',
+            'types',
+            'utilities',
+            'validations'
+        ];
+
+        subPackagesDirName.forEach(dirName => {
+            this._private_createSubPackageDirAndFiles(dirName, projectProjectPackagePath);
+        });
+
         this.fs.copyTpl(
             this.templatePath('project/**'),
             projectPackagePath,
@@ -137,6 +158,26 @@ module.exports = class extends Generator {
         <link rel="stylesheet" type="text/css" href="<%-css%>" /> <% }); %>
                 `
             }
+        );
+    }
+
+    _private_createSubPackageDirAndFiles(dirName, parentDirPath) {
+        const { c_project_name } = this.answers;
+        const dirPath = path.join(parentDirPath, dirName);
+        mkdirp.sync(dirPath);
+
+        const pkgJSON = {
+            name: `@${c_project_name}/${dirName}`,
+            version: '0.1.0',
+            description: '',
+            author: 'Timo Yan',
+            license: 'ISC'
+        };
+
+        this.fs.writeJSON(path.join(dirPath, 'package.json'), pkgJSON);
+        this.fs.copy(
+            this.templatePath('sub-package/index.ts'),
+            path.join(dirPath, 'index.ts')
         );
     }
 
