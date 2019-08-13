@@ -122,11 +122,11 @@ module.exports = class extends Generator {
             'apis',
             'client',
             'components',
-            'config',
+            // 'config',
             'constants',
             'containers',
-            'epics',
-            'reducers',
+            // 'epics',
+            // 'reducers',
             'tests',
             'types',
             'utilities',
@@ -136,6 +136,36 @@ module.exports = class extends Generator {
         subPackagesDirName.forEach(dirName => {
             this._private_createSubPackageDirAndFiles(dirName, projectProjectPackagePath);
         });
+
+        this.fs.copyTpl(
+            this.templatePath('react/client/**'),
+            path.join(projectProjectPackagePath, 'client'),
+            { c_project_name: c_project_name }
+        );
+
+        this.fs.copyTpl(
+            this.templatePath('react/config/**'),
+            path.join(projectProjectPackagePath, 'config'),
+            { c_project_name: c_project_name }
+        );
+
+        this.fs.copyTpl(
+            this.templatePath('react/reducers/**'),
+            path.join(projectProjectPackagePath, 'reducers'),
+            { c_project_name: c_project_name }
+        );
+
+        this.fs.copyTpl(
+            this.templatePath('react/types/**'),
+            path.join(projectProjectPackagePath, 'types'),
+            { c_project_name: c_project_name }
+        );
+
+        this.fs.copyTpl(
+            this.templatePath('react/epics/**'),
+            path.join(projectProjectPackagePath, 'epics'),
+            { c_project_name: c_project_name }
+        );
 
         this.fs.copyTpl(
             this.templatePath('project/**'),
