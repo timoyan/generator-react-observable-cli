@@ -93,3 +93,8 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+<%= c_dotnet_project_name %>/_bak
+<%= c_dotnet_project_name %>/bin
+<%= c_dotnet_project_name %>/obj
+<%= c_dotnet_project_name %>/wwwroot

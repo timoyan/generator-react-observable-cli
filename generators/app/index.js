@@ -91,13 +91,16 @@ module.exports = class extends Generator {
     }
 
     copyRootFiles() {
-        this.fs.copy(this.templatePath('root/**'), this.destinationRoot(), {
-            globOptions: { dot: true }
-        });
-    }
-
-    install() {
-        this.yarnInstall(null, { registry: 'https://registry.npm.taobao.org/' }, null);
+        const { c_dotnet_project_name } = this.answers;
+        this.fs.copyTpl(
+            this.templatePath('root/**'),
+            this.destinationRoot(),
+            { c_dotnet_project_name: c_dotnet_project_name },
+            null,
+            {
+                globOptions: { dot: true }
+            }
+        );
     }
 
     createPackages() {
@@ -108,6 +111,18 @@ module.exports = class extends Generator {
         const { c_project_name } = this.answers;
         const packagesPath = this.destinationPath('packages');
         mkdirp.sync(path.join(packagesPath, c_project_name));
+    }
+
+    createCoreScriptPackage() {
+        const { c_project_name } = this.answers;
+
+        this.fs.copyTpl(
+            this.templatePath('core-scripts/**'),
+            this.destinationPath('packages/core-scripts'),
+            { c_project_name: c_project_name },
+            null,
+            { globOptions: { dot: true } }
+        );
     }
 
     createFilesAndFoldersOfProject() {
@@ -122,11 +137,11 @@ module.exports = class extends Generator {
             'apis',
             'client',
             'components',
-            // 'config',
+            'config',
             'constants',
             'containers',
-            // 'epics',
-            // 'reducers',
+            'epics',
+            'reducers',
             'tests',
             'types',
             'utilities',
@@ -189,6 +204,11 @@ module.exports = class extends Generator {
                 `
             }
         );
+
+        this.fs.copy(
+            this.templatePath('public/assets.html'),
+            path.join(projectPackagePath, 'public/assets.html')
+        );
     }
 
     _private_createSubPackageDirAndFiles(dirName, parentDirPath) {
@@ -205,19 +225,24 @@ module.exports = class extends Generator {
         };
 
         this.fs.writeJSON(path.join(dirPath, 'package.json'), pkgJSON);
-        this.fs.copy(
-            this.templatePath('sub-package/index.ts'),
-            path.join(dirPath, 'index.ts')
-        );
+
+        const excludeList = ['client', 'config', 'epics', 'reducers'];
+
+        if (!excludeList.includes(dirName)) {
+            this.fs.copy(
+                this.templatePath('sub-package/index.ts'),
+                path.join(dirPath, 'index.ts')
+            );
+        }
     }
 
     createVSCodeConfigurations() {
-        const { c_project_name } = this.answers;
+        const { c_project_name, c_dotnet_project_name } = this.answers;
 
         this.fs.copyTpl(
             this.templatePath('vscode/**'),
             this.destinationPath('./.vscode'),
-            { project_name: c_project_name },
+            { project_name: c_project_name, c_dotnet_project_name: c_dotnet_project_name },
             null,
             {
                 globOptions: {
@@ -254,5 +279,9 @@ module.exports = class extends Generator {
             path.join(aspnetTemplatePath, 'template.csproj'),
             path.join(aspnetFolderPath, `${c_dotnet_project_name}.csproj`)
         );
+    }
+
+    install() {
+        this.yarnInstall(null, { registry: 'https://registry.npm.taobao.org/' }, null);
     }
 };

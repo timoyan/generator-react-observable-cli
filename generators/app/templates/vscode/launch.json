@@ -2,9 +2,37 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": ".NET Core Launch (web)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/<%= c_dotnet_project_name %>/bin/Debug/netcoreapp2.2/<%= c_dotnet_project_name %>.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/<%= c_dotnet_project_name %>",
+            "stopAtEntry": false,
+            "launchBrowser": {
+                "enabled": true,
+                "args": "${auto-detect-url}",
+                "windows": {
+                    "command": "cmd.exe",
+                    "args": "/C start ${auto-detect-url}"
+                },
+                "osx": {
+                    "command": "open"
+                },
+                "linux": {
+                    "command": "xdg-open"
+                }
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://localhost:4000"
+            }
+        },
+        {
+            "name": "Debug Jest Tests",
             "type": "node",
             "request": "launch",
-            "name": "Debug Jest Tests",
             "cwd": "${workspaceRoot}/packages/<%= project_name %>",
             "args": [
                 "--inspect-brk",

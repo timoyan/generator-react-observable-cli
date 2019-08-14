@@ -7,11 +7,6 @@
 
 -   If you are debugging locally, also run `npm link`.
 
--   Install .NET Core SDK. Please make sure you have dotnet cli after installation.\
-    You can verify it by executing `dotnet --version`
-
--   Install aspnet-codegenerator by executing `dotnet tool install -g dotnet-aspnet-codegenerator`
-
 ## Execute cli
 
 -   Run `yo react-observable-cli`

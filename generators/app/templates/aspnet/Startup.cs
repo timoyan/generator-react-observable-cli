@@ -42,11 +42,12 @@ namespace <%= c_aspnet_project_name %>
             app.UseStaticFiles ();
 
             app.UseMvc (routes => {
-                    routes.MapRoute (
-                        name: "default",
-                        template: "/{*url}",
-                        defaults : new { controller = "Home", action = "Index" }
-                    });
-            }
+                routes.MapRoute (
+                    name: "default",
+                    template: "/{*url}",
+                    defaults : new { controller = "Home", action = "Index" }
+                );
+            });
         }
     }
+}

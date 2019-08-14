@@ -21,7 +21,7 @@ namespace <%= c_aspnet_project_name %>.Controllers
         }
         public IConfiguration Configuration { get; }
 
-        public async Task<ActionResult> Index () {
+        public IActionResult Index () {
             return View ();
         }
 

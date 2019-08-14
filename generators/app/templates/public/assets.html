@@ -1,0 +1,5 @@
+<% _.forEach(htmlWebpackPlugin.files.js, function(js) { %>
+<script type="text/javascript" src="<%-js%>"></script>
+<% }); _.forEach(htmlWebpackPlugin.files.css, function(css) { %>
+<link rel="stylesheet" type="text/css" href="<%-css%>" />
+<% }); %>
