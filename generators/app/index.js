@@ -10,7 +10,7 @@ module.exports = class extends Generator {
 
         // TODO: Will remove when promption enable
         this.answers = {
-            c_project_name: 'sample-chart',
+            c_project_name: 'sample',
             c_dotnet_project_name: 'Sample.Chart.Name'
         };
     }
@@ -71,9 +71,7 @@ module.exports = class extends Generator {
             },
             husky: {
                 hooks: {
-                    'pre-commit': `yarn ${
-                        c_script_name['type-check']
-                    } && npx lint-staged'`,
+                    'pre-commit': `yarn ${c_script_name['type-check']} && npx lint-staged`,
                     'pre-push': `yarn ${c_script_name.test}`
                 }
             },
